@@ -1,13 +1,106 @@
-### maximum sum of two non-overlapping events
+# Maximize Happiness of Selected Children
 
-this problem asks us to select at most two events such that they do not overlap in time and the total value obtained is maximum. each event is given with a start time, end time, and value.
+## Problem Description
+You are given an array `happiness` of length `n`, and a positive integer `k`.
 
-the solution first sorts all events by their start time. this makes it easier to search for the next valid event that can be attended after the current one.
+There are `n` children standing in a queue, where the ith child has happiness value `happiness[i]`. You want to select `k` children from these `n` children in `k` turns.
 
-a suffix maximum array is created to store the maximum event value available from a given index to the end. this helps in quickly finding the best possible second event.
+In each turn, when you select a child, the happiness value of all the children that have not been selected till now decreases by 1. Note that the happiness value cannot become negative and gets decremented only if it is positive.
 
-for each event, we treat it as the first event and use binary search to find the next event whose start time is greater than the current event’s end time. if such an event exists, its best value is added using the suffix array.
+Return the maximum sum of the happiness values of the selected children you can achieve by selecting `k` children.
 
-the maximum sum is updated at each step. by combining sorting, suffix maximum, and binary search, the solution efficiently finds the correct answer.
+### Example 1:
 
-the time complexity of this approach is o(n log n) and the space complexity is o(n), making it suitable for large inputs on leetcode.
+```plaintext
+Input: happiness = [1,2,3], k = 2
+Output: 4
+```
+
+**Explanation:**
+- Pick the child with the happiness value `3`. The happiness value of the remaining children becomes `[0,1]`.
+- Pick the child with the happiness value `1`. The happiness value of the remaining children becomes `[0]`.
+The sum of the happiness values of the selected children is `3 + 1 = 4`.
+
+### Example 2:
+
+```plaintext
+Input: happiness = [1,1,1,1], k = 2
+Output: 1
+```
+
+**Explanation:**
+- Pick any child with the happiness value `1`. The happiness value of the remaining children becomes `[0,0,0]`.
+- Pick the child with the happiness value `0`. The happiness value of the remaining children becomes `[0,0]`.
+The sum of the happiness values of the selected children is `1 + 0 = 1`.
+
+### Example 3:
+
+```plaintext
+Input: happiness = [2,3,4,5], k = 1
+Output: 5
+```
+
+**Explanation:**
+- Pick the child with the happiness value `5`. The happiness value of the remaining children becomes `[1,2,3]`.
+The sum of the happiness values of the selected children is `5`.
+
+## Solution
+The problem is solved via the following algorithm implemented in C:
+
+1. **Sort the Happiness Array:**
+   - The array is sorted in ascending order to focus on the highest values in the subsequent steps.
+
+2. **Iterate and Select Children:**
+   - Starting from the end of the sorted array (highest values), select the child with the current maximum happiness value.
+   - Subtract the number of turns that have passed from the child's happiness value.
+   - Add the resulting happiness value to the total sum, ensuring it is non-negative.
+   - Stop the process once `k` children are selected.
+
+## Code Implementation
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+// Comparator function for qsort
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+long long maximumHappinessSum(int* happiness, int happinessSize, int k) {
+
+    qsort(happiness, happinessSize, sizeof(int), compare);
+
+    long long sum = 0;
+    int turns = 0;
+
+    for (int i = happinessSize - 1; i >= 0; i--) {
+        int value = happiness[i] - turns;
+        if (value > 0)
+            sum += value;
+
+        turns++;
+        if (turns >= k)
+            break;
+    }
+
+    return sum;
+}
+```
+
+## Usage
+- Copy the above code into a C file (e.g., `maximize_happiness.c`).
+- Compile the file with a C compiler, for example:
+
+```sh
+gcc -o maximize_happiness maximize_happiness.c
+```
+
+- Run the executable with your input values, modifying the `happiness` array and `k` value in the code.
+
+## Complexity
+- **Time Complexity:** $O(n \log n)$ due to the sorting step.
+- **Space Complexity:** $O(1)$ as the sorting is done in-place.
+
+## License
+This code is available for educational and personal use. You may modify and distribute it with proper attribution.
