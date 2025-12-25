@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+long long maximumHappinessSum(int* happiness, int happinessSize, int k) {
+
+    qsort(happiness, happinessSize, sizeof(int), compare);
+
+    long long sum = 0;
+    int turns = 0;
+
+    for (int i = happinessSize - 1; i >= 0; i--) {
+        int value = happiness[i] - turns;
+        if (value > 0)
+            sum += value;
+
+        turns++;
+        if (turns >= k)
+            break;
+    }
+
+    return sum;
+}
