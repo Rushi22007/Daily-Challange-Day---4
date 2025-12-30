@@ -1,0 +1,46 @@
+#include <stdbool.h>
+
+int largestMagicSquare(int** grid, int gridSize, int* gridColSize) {
+    int m = gridSize;
+    int n = gridColSize[0];
+
+    int row[51][51] = {0};
+    int col[51][51] = {0};
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            row[i][j + 1] = row[i][j] + grid[i][j];
+            col[j][i + 1] = col[j][i] + grid[i][j];
+        }
+    }
+
+    int maxK = m < n ? m : n;
+
+    for (int k = maxK; k >= 2; k--) {
+        for (int i = 0; i + k <= m; i++) {
+            for (int j = 0; j + k <= n; j++) {
+
+                int target = row[i][j + k] - row[i][j];
+                bool ok = true;
+
+                for (int r = i; r < i + k && ok; r++)
+                    if (row[r][j + k] - row[r][j] != target)
+                        ok = false;
+
+                for (int c = j; c < j + k && ok; c++)
+                    if (col[c][i + k] - col[c][i] != target)
+                        ok = false;
+
+                int d1 = 0, d2 = 0;
+                for (int t = 0; t < k; t++) {
+                    d1 += grid[i + t][j + t];
+                    d2 += grid[i + t][j + k - 1 - t];
+                }
+
+                if (ok && d1 == target && d2 == target)
+                    return k;
+            }
+        }
+    }
+    return 1;
+}
