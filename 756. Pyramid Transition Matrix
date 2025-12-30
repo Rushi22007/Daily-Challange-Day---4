@@ -1,0 +1,23 @@
+include <stdbool.h>
+#include <string.h>
+#
+bool dfs(char *row, int len, bool map[6][6][6]) {
+    if (len == 1) return true;
+
+    char next[7];
+
+    bool build(int idx) {
+        if (idx == len - 1)
+            return dfs(next, len - 1, map);
+
+        int a = row[idx] - 'A';
+        int b = row[idx + 1] - 'A';
+
+        for (int c = 0; c < 6; c++) {
+            if (map[a][b][c]) {
+                next[idx] = c + 'A';
+                if (build(idx + 1)) return true;
+            }
+        }
+        return false;
+    }
