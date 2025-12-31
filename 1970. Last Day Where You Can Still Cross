@@ -1,0 +1,41 @@
+#include <stdbool.h>
+
+int p[40005], rnk[40005];
+
+int find(int x){
+    return p[x]==x ? x : (p[x]=find(p[x]));
+}
+
+void unite(int a,int b){
+    a=find(a); b=find(b);
+    if(a==b) return;
+    if(rnk[a]<rnk[b]) p[a]=b;
+    else if(rnk[a]>rnk[b]) p[b]=a;
+    else p[b]=a, rnk[a]++;
+}
+
+int latestDayToCross(int row,int col,int** cells,int cellsSize,int* cellsColSize){
+    int n=row*col, TOP=n, BOT=n+1;
+    bool land[20005]={0};
+    int d[4][2]={{1,0},{-1,0},{0,1},{0,-1}};
+
+    for(int i=0;i<=n+1;i++) p[i]=i, rnk[i]=0;
+
+    for(int i=cellsSize-1;i>=0;i--){
+        int r=cells[i][0]-1, c=cells[i][1]-1;
+        int id=r*col+c;
+        land[id]=1;
+
+        for(int k=0;k<4;k++){
+            int nr=r+d[k][0], nc=c+d[k][1];
+            if(nr>=0&&nr<row&&nc>=0&&nc<col){
+                int nid=nr*col+nc;
+                if(land[nid]) unite(id,nid);
+            }
+        }
+        if(r==0) unite(id,TOP);
+        if(r==row-1) unite(id,BOT);
+        if(find(TOP)==find(BOT)) return i;
+    }
+    return 0;
+}
