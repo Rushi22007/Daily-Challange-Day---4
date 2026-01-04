@@ -15,6 +15,7 @@ The repository is organized as follows:
 - **Solution Files:** Solutions will be provided in multiple programming languages (if applicable). For example:
   - `solution.py` (Python)
   - `solution.cpp` (C++)
+  - 'solution.c'  (c)
   - etc.
 - **README.md:** A brief description of the problem and the approach used to solve it (if required).
 
