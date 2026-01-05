@@ -116,7 +116,7 @@ def generate_logo(output_file='daily_challenge_logo.png', width=800, height=400)
         # Try to use a nice font if available
         font_large = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 80)
         font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 40)
-    except:
+    except (OSError, IOError):
         # Fallback to default font
         print("Using default font (TrueType font not found)")
         font_large = ImageFont.load_default()
