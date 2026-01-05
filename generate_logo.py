@@ -20,6 +20,7 @@ Output:
 """
 
 from PIL import Image, ImageDraw, ImageFont
+import math
 import sys
 
 
@@ -62,8 +63,6 @@ def draw_star(draw, center_x, center_y, size, color):
         size: Size of the star
         color: Color of the star (R, G, B)
     """
-    import math
-    
     points = []
     for i in range(10):
         angle = (i * 36 - 90) * math.pi / 180
@@ -136,7 +135,7 @@ def generate_logo(output_file='daily_challenge_logo.png', width=800, height=400)
     
     # Draw text with shadow for better visibility
     shadow_offset = 3
-    shadow_color = (0, 0, 0, 128)
+    shadow_color = (0, 0, 0)  # Black shadow
     
     # "Daily" text
     x1 = (width - text1_width) // 2
