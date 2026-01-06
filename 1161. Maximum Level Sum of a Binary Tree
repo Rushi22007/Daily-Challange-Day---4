@@ -1,0 +1,44 @@
+int maxLevelSum(struct TreeNode* root) {
+    struct TreeNode* queue[10000];
+    int front = 0, rear = 0;
+
+    queue[rear++] = root;
+
+    int level = 1;
+    int answer = 1;
+    long long maxSum = root->val;
+
+    while (front < rear) {
+        int size = rear - front;
+        long long sum = 0;
+
+        for (int i = 0; i < size; i++) {
+            struct TreeNode* node = queue[front++];
+            sum += node->val;
+
+            if (node->left)
+                queue[rear++] = node->left;
+            if (node->right)
+                queue[rear++] = node->right;
+        }
+
+        if (sum > maxSum) {
+            maxSum = sum;
+            answer = level;
+        }
+
+        level++;
+    }
+    return answer;
+}
+
+
+
+
+
+o/p - 
+    1
+   / \
+  7   0
+ / \
+7  -8
