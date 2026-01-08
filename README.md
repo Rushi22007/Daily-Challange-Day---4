@@ -20,3 +20,23 @@ The repository is organized as follows:
 - **README.md:** A brief description of the problem and the approach used to solve it (if required).
 
 **Example Directory**:
+
+## Daily Challenge Workflow
+
+The following diagram illustrates the typical workflow for tackling the daily challenge. Click on each step to learn more (update URLs as needed):
+
+```mermaid
+graph LR
+    A[Step 1: Choose Problem] --> B[Step 2: Solve & Code]
+    B --> C[Step 3: Test & Document]
+    
+    click A "https://leetcode.com/problemset/" "Browse LeetCode Problems"
+    click B "https://github.com/Rushi22007/Daily-Challange-Day---4" "Work on Solution"
+    click C "https://github.com/Rushi22007/Daily-Challange-Day---4/commits" "Commit Changes"
+    
+    style A fill:#3498db,stroke:#2980b9,color:#fff
+    style B fill:#e74c3c,stroke:#c0392b,color:#fff
+    style C fill:#2ecc71,stroke:#27ae60,color:#fff
+```
+
+**Note:** The diagram above shows three key steps in the daily challenge process. Each node is clickable and links to relevant resources. You can customize the URLs and labels to match your specific workflow.
