@@ -1,0 +1,30 @@
+#include<stdio.h>
+
+struct TreeNode* helper(struct TreeNode* root, int* d) {
+    if (!root) {
+        *d = 0;
+        return NULL;
+    }
+
+    int ld, rd;
+    struct TreeNode* l = helper(root->left, &ld);
+    struct TreeNode* r = helper(root->right, &rd);
+
+    if (ld == rd) {
+        *d = ld + 1;
+        return root;
+    }
+
+    if (ld > rd) {
+        *d = ld + 1;
+        return l;
+    } else {
+        *d = rd + 1;
+        return r;
+    }
+}
+
+struct TreeNode* subtreeWithAllDeepest(struct TreeNode* root) {
+    int depth;
+    return helper(root, &depth);
+}
